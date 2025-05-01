@@ -41,6 +41,8 @@ const ClientsSection = () => {
         setLoading(true);
         const data = await getClientTestimonials(language);
 
+        console.log(data);
+
         if (data && data.length > 0) {
           const testimonials = data.map((client: any) => ({
             id: client.id,
@@ -85,7 +87,28 @@ const ClientsSection = () => {
           ]);
         }
       } catch (err) {
-        setError("Failed to load client testimonials");
+        setClientTestimonials([
+          {
+            id: 1,
+            name: { en: "Mohammed Saif", ar: "محمد سيف" },
+            position: { en: "CEO/Company", ar: "الرئيس التنفيذي/الشركة" },
+            image: "/man.png",
+            testimonial: {
+              en: "With the help of the hospitable staff of Al Safar and Partners I was able to get my work done without any hassle. The help I received helped me a great deal to overcome the issues that I faced. I was always updated about my case and my queries never went unanswered.",
+              ar: "بمساعدة الفريق المضياف في الصفار وشركاه، تمكنت من إنجاز عملي دون أي متاعب. المساعدة التي تلقيتها ساعدتني كثيرًا في التغلب على المشكلات التي واجهتها. كنت دائمًا على اطلاع بحالة قضيتي ولم تبق استفساراتي أبدًا دون إجابة.",
+            },
+          },
+          {
+            id: 2,
+            name: { en: "Mohammed Hamza", ar: "محمد حمزة" },
+            position: { en: "CEO/Company", ar: "الرئيس التنفيذي/الشركة" },
+            image: "/man.png",
+            testimonial: {
+              en: "With the help of the hospitable staff of Al Safar and Partners I was able to get my work done without any hassle. The help I received helped me a great deal to overcome the issues that I faced. I was always updated about my case and my queries never went unanswered.",
+              ar: "بمساعدة الفريق المضياف في الصفار وشركاه، تمكنت من إنجاز عملي دون أي متاعب. المساعدة التي تلقيتها ساعدتني كثيرًا في التغلب على المشكلات التي واجهتها. كنت دائمًا على اطلاع بحالة قضيتي ولم تبق استفساراتي أبدًا دون إجابة.",
+            },
+          },
+        ]);
       } finally {
         setLoading(false);
       }
