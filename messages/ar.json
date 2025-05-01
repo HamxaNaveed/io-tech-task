@@ -1,0 +1,47 @@
+{
+  "common": {
+    "readMore": "اقرأ المزيد",
+    "bookAppointment": "حجز موعد",
+    "subscribe": "اشترك",
+    "contacts": "اتصل بنا",
+    "allRightsReserved": "جميع الحقوق محفوظة.",
+    "search": "بحث...",
+    "email": "البريد الإلكتروني"
+  },
+  "header": {
+    "aboutUs": "من نحن",
+    "services": "خدماتنا",
+    "ourTeam": "فريقنا",
+    "blogs": "المدونة",
+    "contactUs": "اتصل بنا"
+  },
+  "footer": {
+    "about": "من نحن",
+    "ourStrategy": "استراتيجيتنا",
+    "ourAdvantages": "مميزاتنا",
+    "socialResponsibility": "المسؤولية الاجتماعية",
+    "ourServices": "خدماتنا",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "invalidEmail": "عنوان بريد إلكتروني غير صالح",
+    "alreadySubscribed": "هذا البريد الإلكتروني مشترك بالفعل",
+    "thankYouSubscribing": "شكرا لاشتراكك!",
+    "errorOccurred": "حدث خطأ. يرجى المحاولة مرة أخرى."
+  },
+  "hero": {
+    "readMore": "اقرأ المزيد",
+    "previousSlide": "الشريحة السابقة",
+    "nextSlide": "الشريحة التالية"
+  },
+  "team": {
+    "ourTeam": "فريقنا",
+    "teamDescription": "لوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر",
+    "previousTeamMembers": "أعضاء الفريق السابقين",
+    "nextTeamMembers": "أعضاء الفريق التاليين"
+  },
+  "clients": {
+    "whatClientsSaying": "ماذا يقول عملاؤنا",
+    "clientsDescription": "يتراوح عملاؤنا من المستثمرين الأفراد إلى شركات فورتشن 500. إليك ما يقولونه عنا.",
+    "previousTestimonial": "الشهادة السابقة",
+    "nextTestimonial": "الشهادة التالية"
+  }
+}

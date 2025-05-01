@@ -1,0 +1,47 @@
+{
+  "common": {
+    "readMore": "Read More",
+    "bookAppointment": "Book Appointment",
+    "subscribe": "Subscribe",
+    "contacts": "Contacts",
+    "allRightsReserved": "All rights reserved.",
+    "search": "Search...",
+    "email": "Email"
+  },
+  "header": {
+    "aboutUs": "About us",
+    "services": "Services",
+    "ourTeam": "Our Team",
+    "blogs": "Blogs",
+    "contactUs": "Contact Us"
+  },
+  "footer": {
+    "about": "About",
+    "ourStrategy": "Our Strategy",
+    "ourAdvantages": "Our Advantages",
+    "socialResponsibility": "Social Responsibility",
+    "ourServices": "Our Services",
+    "emailRequired": "Email is required",
+    "invalidEmail": "Invalid email address",
+    "alreadySubscribed": "This email is already subscribed",
+    "thankYouSubscribing": "Thank you for subscribing!",
+    "errorOccurred": "An error occurred. Please try again."
+  },
+  "hero": {
+    "readMore": "Read More",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide"
+  },
+  "team": {
+    "ourTeam": "Our Team",
+    "teamDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+    "previousTeamMembers": "Previous team members",
+    "nextTeamMembers": "Next team members"
+  },
+  "clients": {
+    "whatClientsSaying": "What our clients are saying",
+    "clientsDescription": "Our clients range from individual investors to Fortune 500 companies. Here's what they say about us.",
+    "previousTestimonial": "Previous testimonial",
+    "nextTestimonial": "Next testimonial"
+  }
+}
