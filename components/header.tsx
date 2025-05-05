@@ -11,6 +11,7 @@ import { setSearchQuery, toggleSearch } from "@/redux/features/searchSlice";
 import { fetchAPI } from "@/lib/api";
 import { useTranslations } from "next-intl";
 import { searchContent } from "@/lib/search";
+import { fallbackServices } from "@/lib/fallback-data";
 
 interface Service {
   id: number;
@@ -25,6 +26,7 @@ const Header = () => {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [services, setServices] = useState<Service[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+  const [apiFailed, setApiFailed] = useState(false);
 
   const { language, toggleLanguage, isRTL } = useLanguage();
   const router = useRouter();
@@ -55,9 +57,23 @@ const Header = () => {
     if (!isMounted) return;
     const fetchServices = async () => {
       try {
-        const res = await fetchAPI("/api/services?fields=slug,title_en");
+        const res =
+          (await fetchAPI("/api/services?fields=slug,title_en")) ??
+          fallbackServices;
         setServices(res.data);
-      } catch (err) {}
+        setApiFailed(false);
+      } catch (err) {
+        console.error("Failed to fetch services:", err);
+        // Use fallback data when API fails
+        const fallbackServiceData = fallbackServices.map((service) => ({
+          id: service.id,
+          title_en: service.title_en,
+          title_ar: service.title_ar,
+          slug: service.slug,
+        }));
+        setServices(fallbackServiceData);
+        setApiFailed(true);
+      }
     };
     fetchServices();
   }, [isMounted, language]);
@@ -130,7 +146,10 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-white hover:text-gray-300">
+            <Link
+              href={`/${language}/about`}
+              className="text-white hover:text-gray-300"
+            >
               {headerT("aboutUs")}
             </Link>
             <div
@@ -160,7 +179,7 @@ const Header = () => {
                     isRTL ? "right-0" : "left-0"
                   } top-full w-[100vw] bg-[#3E2723] rounded-b-lg shadow-lg py-6 px-8 z-10`}
                 >
-                  <div className="grid grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {services.map((service) => (
                       <Link
                         key={service.id}
@@ -172,17 +191,32 @@ const Header = () => {
                           : service.title_ar}
                       </Link>
                     ))}
+                    {apiFailed && (
+                      <div className="col-span-full text-xs text-amber-300">
+                        Using locally stored services. Connect to API to see all
+                        services.
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
             </div>
-            <Link href="/" className="text-white hover:text-gray-300">
+            <Link
+              href={`/${language}/team`}
+              className="text-white hover:text-gray-300"
+            >
               {headerT("ourTeam")}
             </Link>
-            <Link href="/" className="text-white hover:text-gray-300">
+            <Link
+              href={`/${language}/blog`}
+              className="text-white hover:text-gray-300"
+            >
               {headerT("blogs")}
             </Link>
-            <Link href="/" className="text-white hover:text-gray-300">
+            <Link
+              href={`/${language}/contact`}
+              className="text-white hover:text-gray-300"
+            >
               {headerT("contactUs")}
             </Link>
           </nav>
@@ -199,7 +233,7 @@ const Header = () => {
               {language === "en" ? "En" : "Ar"}
             </button>
             <Link
-              href="/"
+              href={`/${language}/contact`}
               className="hidden md:block border border-white px-4 py-2 rounded text-white hover:bg-white hover:text-[#3E2723]"
             >
               {commonT("bookAppointment")}
@@ -249,6 +283,41 @@ const Header = () => {
           >
             {headerT("aboutUs")}
           </Link>
+          <div className="py-2 text-lg">
+            <button
+              className="flex items-center justify-between w-full"
+              onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+            >
+              <span>{headerT("services")}</span>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d={servicesDropdownOpen ? "M19 9l-7 7-7-7" : "M9 5l7 7-7 7"}
+                />
+              </svg>
+            </button>
+            {servicesDropdownOpen && (
+              <div className="mt-2 ml-4 space-y-2">
+                {services.map((service) => (
+                  <Link
+                    key={service.id}
+                    href={`/${language}/services/${service.slug}`}
+                    onClick={toggleMenu}
+                    className="block py-1 text-sm text-gray-300 hover:text-white"
+                  >
+                    {language === "en" ? service.title_en : service.title_ar}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
           <Link
             href={`/${language}/team`}
             onClick={toggleMenu}

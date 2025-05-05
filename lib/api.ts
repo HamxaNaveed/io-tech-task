@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
 
@@ -34,6 +36,7 @@ export const fetchAPI = async (path: string, options = {}) => {
     return data;
   } catch (error) {
     console.error("Error fetching from Strapi API:", error);
+    notFound();
     throw error;
   }
 };
