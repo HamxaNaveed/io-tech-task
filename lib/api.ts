@@ -1,3 +1,4 @@
+import { log } from "console";
 import { notFound } from "next/navigation";
 
 const API_URL =
@@ -108,6 +109,8 @@ export const getBlogPostBySlug = async (slug: string, language = "en") => {
 };
 
 export const searchContent = async (query: string, language = "en") => {
+  console.log("Searching for:", query);
+
   if (!query || query.trim() === "") {
     return {
       team: [],
@@ -117,6 +120,8 @@ export const searchContent = async (query: string, language = "en") => {
   }
 
   const encodedQuery = encodeURIComponent(query.trim());
+
+  console.log("Encoded query:", encodedQuery);
 
   const createSearchFilters = (fields: string[]) => {
     const filters = fields.flatMap((field) => [
@@ -131,53 +136,31 @@ export const searchContent = async (query: string, language = "en") => {
     return filters.join("&");
   };
 
-  const teamFilters = createSearchFilters([
-    "name_en",
-    "name_ar",
-    "position_en",
-    "position_ar",
-    "bio_en",
-    "bio_ar",
-  ]);
+  console.log("Team filters:", createSearchFilters(["name_en", "name_ar"]));
+
+  const teamFilters = createSearchFilters(["name"]);
   const teamPromise = fetchAPI(
     `/api/team-members?populate=image&${teamFilters}`
   );
 
-  const servicesFilters = createSearchFilters([
-    "title_en",
-    "title_ar",
-    "description_en",
-    "description_ar",
-    "features.title_en",
-    "features.title_ar",
-  ]);
+  const servicesFilters = createSearchFilters(["title_en", "description_en"]);
   const servicesPromise = fetchAPI(
     `/api/services?populate=image&${servicesFilters}`
-  );
-
-  const blogsFilters = createSearchFilters([
-    "title_en",
-    "title_ar",
-    "content_en",
-    "content_ar",
-    "excerpt_en",
-    "excerpt_ar",
-  ]);
-  const blogsPromise = fetchAPI(
-    `/api/blogs?populate=cover_image&${blogsFilters}`
   );
 
   try {
     const [teamData, servicesData, blogData] = await Promise.all([
       teamPromise,
       servicesPromise,
-      blogsPromise,
     ]);
+
+    console.log("Team data:", teamData);
+    console.log("Services data:", servicesData);
+    console.log("Blog data:", blogData);
 
     return {
       team: teamData.data || [],
       services: servicesData.data || [],
-      blog: blogData.data || [],
     };
   } catch (error) {
     return {
