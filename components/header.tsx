@@ -132,6 +132,10 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSearchOpen, dispatch]);
 
+  const handleResultClick = () => {
+    dispatch(toggleSearch());
+  };
+
   if (!isMounted) return null;
 
   const isSolid = isScrolled || servicesDropdownOpen;
@@ -391,6 +395,7 @@ const Header = () => {
                                 member.name
                               )}`}
                               className="block"
+                              onClick={handleResultClick}
                             >
                               {member.name} - {member.role}
                             </Link>
@@ -413,6 +418,7 @@ const Header = () => {
                                 service.title_en
                               )}`}
                               className="block"
+                              onClick={handleResultClick}
                             >
                               {service.title_en}
                             </Link>
