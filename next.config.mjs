@@ -1,6 +1,6 @@
 import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin("./i18n/request.ts"); // 👈 new location
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,10 +12,13 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ["localhost:3000"],
+      bodySizeLimit: "2mb",
+    },
   },
   images: {
-    domains: ["localhost", "your-strapi-domain.com"],
+    domains: ["localhost:3000", "https://io-tech-task-orcin.vercel.app/ar"],
     unoptimized: true,
   },
 };

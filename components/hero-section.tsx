@@ -23,16 +23,17 @@ export const fallbackHeroSlides: HeroSlide[] = [
     title: "Your Success, Our Commitment",
     description: "Watch how we make legal excellence a reality.",
     type: "image",
-    image: "/placeholder.svg?height=1080&width=1920",
+    image: "/hero-image.jpg",
     videoUrl: "",
   },
   {
     id: 2,
     title: "Your Justice, Our Priority",
     description: "Expert legal guidance tailored to your needs.",
-    type: "image",
-    image: "/placeholder.svg?height=1080&width=1920",
-    videoUrl: "",
+    type: "video",
+    image: "",
+    videoUrl:
+      "https://videos.pexels.com/video-files/2424117/2424117-sd_640_360_30fps.mp4",
   },
 ];
 

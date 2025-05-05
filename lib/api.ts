@@ -28,14 +28,12 @@ export const fetchAPI = async (path: string, options = {}) => {
     const res = await fetch(getStrapiURL(path), mergedOptions);
 
     if (!res.ok) {
-      console.error(`API error: ${res.status} ${res.statusText}`);
       throw new Error(`API error: ${res.status}`);
     }
 
     const data = await res.json();
     return data;
   } catch (error) {
-    console.error("Error fetching from Strapi API:", error);
     notFound();
     throw error;
   }
@@ -182,7 +180,6 @@ export const searchContent = async (query: string, language = "en") => {
       blog: blogData.data || [],
     };
   } catch (error) {
-    console.error("Search error:", error);
     return {
       team: [],
       services: [],

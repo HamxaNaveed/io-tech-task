@@ -1,4 +1,3 @@
-// lib/fallback-data.js
 export const fallbackServices = [
   {
     id: 1,
@@ -134,7 +133,6 @@ export const fallbackServices = [
   },
 ];
 
-// Helper function to get fallback service by slug
 export function getFallbackServiceBySlug(slug: string) {
   return fallbackServices.find((service) => service.slug === slug) || null;
 }

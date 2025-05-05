@@ -63,8 +63,6 @@ const Header = () => {
         setServices(res.data);
         setApiFailed(false);
       } catch (err) {
-        console.error("Failed to fetch services:", err);
-        // Use fallback data when API fails
         const fallbackServiceData = fallbackServices.map((service) => ({
           id: service.id,
           title_en: service.title_en,
