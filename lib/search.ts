@@ -1,52 +1,8 @@
 import { fetchAPI } from "./api";
-import { fallbackServices } from "./fallback-data";
-export const fallbackTeam = [
-  {
-    id: 1,
-    name: "Hamza Naveed",
-    role: "Software Engineer",
-    image: "/man.png",
-    social: {
-      email: "officialhamxa@gmail.com",
-      phone: "03075060161",
-      whatsapp: "03075060161",
-    },
-  },
-  {
-    id: 2,
-    name: "Ayesha Khan",
-    role: "Legal Advisor",
-    image: "/man.png",
-    social: {
-      email: "ayesha@example.com",
-      phone: "03001234567",
-      whatsapp: "03001234567",
-    },
-  },
-  {
-    id: 3,
-    name: "George",
-    role: "Legal Advisor",
-    image: "/man.png",
-    social: {
-      email: "ayesha@example.com",
-      phone: "03001234567",
-      whatsapp: "03001234567",
-    },
-  },
-  {
-    id: 4,
-    name: "Martin",
-    role: "Legal Advisor",
-    image: "/man.png",
-    social: {
-      email: "ayesha@example.com",
-      phone: "03001234567",
-      whatsapp: "03001234567",
-    },
-  },
-];
-
+import { fallbackServices, fallbackTeam } from "./fallback-data";
+/**
+ * Search content in Strapi
+ */
 export const searchContent = async (query: string, language = "en") => {
   if (!query || query.trim() === "") {
     return {
@@ -57,9 +13,7 @@ export const searchContent = async (query: string, language = "en") => {
   }
 
   const encodedQuery = encodeURIComponent(query.trim());
-  const lowercaseQuery = query.trim().toLowerCase();
 
-  // API search setup
   const createSearchFilters = (fields: string[]) => {
     const filters = fields.flatMap((field) => [
       `filters[$or][${
@@ -76,12 +30,15 @@ export const searchContent = async (query: string, language = "en") => {
   const teamFilters = createSearchFilters(["name", "role"]);
   const teamPromise = fetchAPI(
     `/api/team-members?populate=image&${teamFilters}`
-  );
+  ).catch(() => fallbackTeam);
 
   const servicesFilters = createSearchFilters(["title_en"]);
   const servicesPromise = fetchAPI(
     `/api/services?populate=image&${servicesFilters}`
-  );
+  ).catch(() => fallbackServices);
+
+  console.log("Using fallbackTeam data:", fallbackTeam);
+  console.log("Using fallbackServices data:", fallbackServices);
 
   try {
     const [teamData, servicesData] = await Promise.all([
@@ -92,41 +49,14 @@ export const searchContent = async (query: string, language = "en") => {
     return {
       team: teamData.data || [],
       services: servicesData.data || [],
-      blog: [],
     };
   } catch (error) {
-    const teamResults = fallbackTeam.filter(
-      (member) =>
-        member.name.toLowerCase().includes(lowercaseQuery) ||
-        member.role.toLowerCase().includes(lowercaseQuery)
-    );
-
-    const servicesResults = fallbackServices.filter(
-      (service) =>
-        service.title_en.toLowerCase().includes(lowercaseQuery) ||
-        (service.description_en &&
-          service.description_en.toLowerCase().includes(lowercaseQuery))
-    );
-
-    const formattedTeam = teamResults.map((member) => ({
-      id: member.id,
-      name: member.name,
-      role: member.role,
-      image: { url: member.image },
-    }));
-
-    const formattedServices = servicesResults.map((service) => ({
-      id: service.id,
-      title_en: service.title_en,
-      slug: service.slug,
-      description_en: service.description_en,
-      image: service.image,
-    }));
-
+    console.error("Search error:", error);
     return {
-      team: formattedTeam,
-      services: formattedServices,
+      team: [],
+      services: [],
       blog: [],
+      error: "Failed to perform search",
     };
   }
 };

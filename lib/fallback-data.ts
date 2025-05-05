@@ -133,6 +133,53 @@ export const fallbackServices = [
   },
 ];
 
+export const fallbackTeam = [
+  {
+    id: 1,
+    name: "Hamza Naveed",
+    position: "Software Engineer",
+    image: "/man.png",
+    social: {
+      email: "officialhamxa@gmail.com",
+      phone: "03075060161",
+      whatsapp: "03075060161",
+    },
+  },
+  {
+    id: 2,
+    name: "Ayesha Khan",
+    position: "Legal Advisor",
+    image: "/man.png",
+    social: {
+      email: "ayesha@example.com",
+      phone: "03001234567",
+      whatsapp: "03001234567",
+    },
+  },
+  {
+    id: 3,
+    name: "George",
+    position: "Legal Advisor",
+    image: "/man.png",
+    social: {
+      email: "ayesha@example.com",
+      phone: "03001234567",
+      whatsapp: "03001234567",
+    },
+  },
+  {
+    id: 4,
+    name: "Martin",
+    position: "Legal Advisor",
+    image: "/man.png",
+    social: {
+      email: "ayesha@example.com",
+      phone: "03001234567",
+      whatsapp: "03001234567",
+    },
+  },
+];
+
 export function getFallbackServiceBySlug(slug: string) {
   return fallbackServices.find((service) => service.slug === slug) || null;
 }

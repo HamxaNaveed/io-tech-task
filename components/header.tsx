@@ -20,6 +20,12 @@ interface Service {
   slug: string;
 }
 
+interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+}
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -354,7 +360,7 @@ const Header = () => {
           className="fixed top-[72px] left-0 w-full bg-[#3E2723]/95 p-4 shadow-md z-[60]"
         >
           <form onSubmit={handleSearchSubmit} className="flex flex-col">
-            <div className="flex w-full">
+            <div className="flex w-full relative">
               <input
                 type="text"
                 value={searchInput}
@@ -369,6 +375,54 @@ const Header = () => {
               >
                 <Search className="h-5 w-5" />
               </button>
+              {searchResults && (
+                <div className="absolute top-full left-0 w-full bg-white text-black p-4 rounded shadow-md mt-2 z-50">
+                  {searchResults.team.length > 0 && (
+                    <div className="mb-4">
+                      <h3 className="font-bold mb-2">Team Members</h3>
+                      <ul>
+                        {searchResults.team.map((member: TeamMember) => (
+                          <li
+                            key={member.id}
+                            className="py-1 border-b border-gray-200 hover:bg-gray-100 transition-colors"
+                          >
+                            <Link
+                              href={`/${language}/search?q=${encodeURIComponent(
+                                member.name
+                              )}`}
+                              className="block"
+                            >
+                              {member.name} - {member.role}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {searchResults.services.length > 0 && (
+                    <div>
+                      <h3 className="font-bold mb-2">Services</h3>
+                      <ul>
+                        {searchResults.services.map((service: Service) => (
+                          <li
+                            key={service.id}
+                            className="py-1 border-b border-gray-200 hover:bg-gray-100 transition-colors"
+                          >
+                            <Link
+                              href={`/${language}/search?q=${encodeURIComponent(
+                                service.title_en
+                              )}`}
+                              className="block"
+                            >
+                              {service.title_en}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </form>
         </div>
